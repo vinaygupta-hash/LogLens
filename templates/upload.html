@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LogLens Upload</title>
+</head>
+<body>
+
+    <h1>Upload Log File</h1>
+
+    <form method="POST" enctype="multipart/form-data">
+        <input type="file" name="logfile">
+        <button type="submit">Analyze</button>
+    </form>
+
+    {% if result %}
+
+        <h2>Analysis Result</h2>
+
+        <p>INFO: {{ result["log_counts"]["INFO"]}}</p>
+        <p>WARNING: {{ result["log_counts"]["WARNING"]}}</p>
+        <p>ERROR: {{ result["log_counts"]["ERROR"] }}</p>
+            <p>DEBUG: {{ result["log_counts"]["DEBUG"]}}</p>
+        <p>CRITICAL: {{ result["log_counts"]["CRITICAL"] }}</p>
+
+        <h3>IP Addresses: </h3>
+        <ul>
+        {%for ip in result["ip_addresses"]%}
+            <li>{{ip}}</li>
+        {%endfor%}
+        </ul>
+
+        <h3>TimeStamps: </h3>
+        <ul>
+            {% for timestamp in result["timestamps"]%}
+            <li>{{timestamp}}</li>
+            {%endfor%}
+        </ul>
+        <h3>Exception Types:</h3>
+        <ul>
+            {% for exception in result["exceptions"] %}
+                <li>{{ exception }}</li>
+            {% endfor %}
+        </ul>
+
+    {% endif %}
+
+    {% if result %}
+    <br>
+    <a href="/download">
+        <button type="button">Download CSV Report</button>
+    </a>
+{% endif %}
+
+
+        
+
+</body>
+</html>
