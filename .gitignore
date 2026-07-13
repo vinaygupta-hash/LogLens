@@ -3,3 +3,4 @@ __pycache__/
 .env
 uploads/*
 !uploads/.gitkeep
+analysis_report.csv
