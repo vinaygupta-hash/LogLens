@@ -8,6 +8,8 @@ app=Flask(__name__)
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 app.config["SECRET_KEY"] = SECRET_KEY
 
+os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True)
+
 last_uploaded_file= None
 
 
