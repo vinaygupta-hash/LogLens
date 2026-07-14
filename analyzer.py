@@ -16,10 +16,13 @@ def counting(file_path):
     # Initialize all log levels to 0
     for log in logs:
         count[log] = 0
-
+    
+    total_lines=0
+    
     try:
         with open(file_path, "r") as f:
             for line in f:
+                total_lines += 1
                 for word in logs:
                     if word in line:
                         count[word] += 1
@@ -47,10 +50,22 @@ def counting(file_path):
     
 
     return {
-        "log_counts": count,
-        "ip_addresses": sorted(ip_addresses),
-        "timestamps": timestamps,
-        "exceptions": sorted(exception_types)
-        
+
+    "log_counts": count,
+
+    "ip_addresses": sorted(ip_addresses),
+
+    "timestamps": timestamps,
+
+    "exceptions": sorted(exception_types),
+
+    "total_lines": total_lines,
+
+    "unique_ips": len(ip_addresses),
+
+    "exception_count": len(exception_types),
+
+    "timestamp_count": len(timestamps)
+
     }
 

@@ -1,58 +1,238 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <title>LogLens Upload</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LogLens</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 </head>
+
 <body>
 
-    <h1>Upload Log File</h1>
+<div class="container">
 
-    <form method="POST" enctype="multipart/form-data">
-        <input type="file" name="logfile">
-        <button type="submit">Analyze</button>
-    </form>
+    <!-- Header -->
+
+    <div class="header">
+
+        <h1>
+            <i class="fa-solid fa-magnifying-glass-chart"></i>
+            LogLens
+        </h1>
+
+        <h2>Professional Server Log Analyzer</h2>
+
+        <p>
+            Upload • Analyze • Detect • Export
+        </p>
+
+    </div>
+
+    <!-- Upload Card -->
+
+    <div class="upload-card">
+
+        <form method="POST" enctype="multipart/form-data">
+
+            <label class="file-label" for="logfile">
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+                Choose Log File
+            </label>
+
+            <input
+                type="file"
+                id="logfile"
+                name="logfile"
+                required>
+
+            <p id="filename">No file selected</p>
+
+            <button type="submit">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                Analyze Logs
+            </button>
+
+        </form>
+
+    </div>
 
     {% if result %}
 
-        <h2>Analysis Result</h2>
+    <!--Summary Card-->
 
-        <p>INFO: {{ result["log_counts"]["INFO"]}}</p>
-        <p>WARNING: {{ result["log_counts"]["WARNING"]}}</p>
-        <p>ERROR: {{ result["log_counts"]["ERROR"] }}</p>
-            <p>DEBUG: {{ result["log_counts"]["DEBUG"]}}</p>
-        <p>CRITICAL: {{ result["log_counts"]["CRITICAL"] }}</p>
+    <div class="summary-card">
 
-        <h3>IP Addresses: </h3>
-        <ul>
-        {%for ip in result["ip_addresses"]%}
-            <li>{{ip}}</li>
-        {%endfor%}
-        </ul>
+    <h2>
+        <i class="fa-solid fa-chart-simple"></i>
+        Analysis Summary
+    </h2>
 
-        <h3>TimeStamps: </h3>
-        <ul>
-            {% for timestamp in result["timestamps"]%}
-            <li>{{timestamp}}</li>
-            {%endfor%}
-        </ul>
-        <h3>Exception Types:</h3>
-        <ul>
-            {% for exception in result["exceptions"] %}
-                <li>{{ exception }}</li>
-            {% endfor %}
-        </ul>
+    <div class="summary-grid">
+
+        <div class="summary-item">
+            <span>Total Lines</span>
+            <strong>{{ result["total_lines"] }}</strong>
+        </div>
+
+        <div class="summary-item">
+            <span>Unique IPs</span>
+            <strong>{{ result["unique_ips"] }}</strong>
+        </div>
+
+        <div class="summary-item">
+            <span>Exceptions</span>
+            <strong>{{ result["exception_count"] }}</strong>
+        </div>
+
+        <div class="summary-item">
+            <span>Timestamps</span>
+            <strong>{{ result["timestamp_count"] }}</strong>
+        </div>
+
+    </div>
+
+</div>
+
+    <!-- Dashboard -->
+
+    <div class="dashboard">
+
+        <div class="card info">
+            <i class="fa-solid fa-circle-info card-icon"></i>
+            <h3>INFO</h3>
+            <p>{{ result["log_counts"]["INFO"] }}</p>
+        </div>
+
+        <div class="card warning">
+            <i class="fa-solid fa-triangle-exclamation card-icon"></i>
+            <h3>WARNING</h3>
+            <p>{{ result["log_counts"]["WARNING"] }}</p>
+        </div>
+
+        <div class="card error">
+            <i class="fa-solid fa-circle-xmark card-icon"></i>
+            <h3>ERROR</h3>
+            <p>{{ result["log_counts"]["ERROR"] }}</p>
+        </div>
+
+        <div class="card debug">
+            <i class="fa-solid fa-bug card-icon"></i>
+            <h3>DEBUG</h3>
+            <p>{{ result["log_counts"]["DEBUG"] }}</p>
+        </div>
+
+        <div class="card critical">
+            <i class="fa-solid fa-shield-halved card-icon"></i>
+            <h3>CRITICAL</h3>
+            <p>{{ result["log_counts"]["CRITICAL"] }}</p>
+        </div>
+
+    </div>
+
+    <!-- Information Panels -->
+
+    <div class="info-grid">
+
+        <!-- IP Addresses -->
+
+        <div class="info-card">
+
+            <h2>
+                <i class="fa-solid fa-network-wired"></i>
+                IP Addresses
+            </h2>
+
+            <ul>
+                {% for ip in result["ip_addresses"] %}
+                    <li>{{ ip }}</li>
+                {% endfor %}
+            </ul>
+
+        </div>
+
+        <!-- Exception Types -->
+
+        <div class="info-card">
+
+            <h2>
+                <i class="fa-solid fa-bug"></i>
+                Exception Types
+            </h2>
+
+            <ul>
+                {% for exception in result["exceptions"] %}
+                    <li>{{ exception }}</li>
+                {% endfor %}
+            </ul>
+
+        </div>
+
+        <!-- Timestamps -->
+
+        <div class="info-card">
+
+            <h2>
+                <i class="fa-solid fa-clock"></i>
+                Timestamps
+            </h2>
+
+            <ul>
+                {% for timestamp in result["timestamps"] %}
+                    <li>{{ timestamp }}</li>
+                {% endfor %}
+            </ul>
+
+        </div>
+
+    </div>
+
+    <!-- Download Button -->
+
+    <div class="download">
+
+        <a href="/download">
+
+            <button type="button">
+                <i class="fa-solid fa-download"></i>
+                Download CSV Report
+            </button>
+
+        </a>
+
+    </div>
 
     {% endif %}
 
-    {% if result %}
-    <br>
-    <a href="/download">
-        <button type="button">Download CSV Report</button>
-    </a>
-{% endif %}
+</div>
 
+<script>
 
-        
+const fileInput = document.getElementById("logfile");
+const filename = document.getElementById("filename");
+
+fileInput.addEventListener("change", function () {
+
+    if (this.files.length > 0) {
+
+        filename.textContent = this.files[0].name;
+
+    } else {
+
+        filename.textContent = "No file selected";
+
+    }
+
+});
+
+</script>
 
 </body>
+
 </html>
