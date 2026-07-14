@@ -1,7 +1,7 @@
-from flask import Flask, render_template, request, send_file
+from flask import Flask, render_template, request, send_file, redirect
 from config import *
 from analyzer import counting
-import csv
+import csv, os
 
 app=Flask(__name__)
 
@@ -13,7 +13,7 @@ last_uploaded_file= None
 
 @app.route("/")
 def home():
-    return "<h1>Welcome to Loglens 🚀</h1>"
+    return redirect("/upload")
 
 @app.route("/upload",methods=["GET","POST"])
 def upload():
