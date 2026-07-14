@@ -49,25 +49,23 @@ The project demonstrates practical backend development, file processing, regular
 
 ---
 
-# 📸 Screenshots
+## 📸 Screenshots
 
-> Screenshots will be added after deployment.
+### 🏠 Home Page
 
-### Home
-
-*(Add screenshot here)*
+![Home Page](screenshots/home.png)
 
 ---
 
-### Dashboard
+### 📊 Dashboard
 
-*(Add screenshot here)*
+![Dashboard](screenshots/dashboard.png)
 
 ---
 
-### CSV Report
+### 📄 CSV Report
 
-*(Add screenshot here)*
+![CSV Report](screenshots/csv.png)
 
 ---
 
@@ -212,9 +210,9 @@ The project focuses on efficient log parsing, extracting meaningful information 
 
 ---
 
-# 🌐 Live Demo
+## 🌐 Live Demo
 
-🚀 Coming Soon (Render Deployment)
+https://loglens-34x5.onrender.com
 
 ---
 
