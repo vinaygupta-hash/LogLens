@@ -38,6 +38,11 @@
     <!-- Upload Card -->
 
     <div class="upload-card">
+        {% if error %}
+        <div class="error-box">
+            {{ error }}
+        </div>
+    {% endif %}
 
         <form method="POST" enctype="multipart/form-data">
 
